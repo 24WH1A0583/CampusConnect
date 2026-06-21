@@ -1,14 +1,45 @@
-function EventCard({ event }) {
+import api from "../services/api";
+import "../css/Cards.css";
+
+function EventCard({
+  event,
+  fetchEvents,
+}) {
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  async function handleDelete() {
+    try {
+      const token =
+        localStorage.getItem(
+          "token"
+        );
+
+      await api.delete(
+        `/events/${event._id}`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+      fetchEvents();
+    } catch (error) {
+      console.log(error);
+      alert(
+        error.response?.data
+          ?.message ||
+          "Could not delete event."
+      );
+    }
+  }
+
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        padding: "15px",
-        margin: "15px 0",
-        borderRadius: "10px",
-      }}
-    >
-      <h2>{event.title}</h2>
+    <div className="card">
+      <h2>📅 {event.title}</h2>
 
       <p>
         <strong>Description:</strong>{" "}
@@ -17,11 +48,12 @@ function EventCard({ event }) {
 
       <p>
         <strong>Location:</strong>{" "}
-        {event.location}
+        📍 {event.location}
       </p>
 
       <p>
         <strong>Date:</strong>{" "}
+        📆{" "}
         {new Date(
           event.date
         ).toLocaleDateString()}
@@ -29,10 +61,27 @@ function EventCard({ event }) {
 
       {event.createdBy && (
         <p>
-          <strong>Created By:</strong>{" "}
+          <strong>
+            Created By:
+          </strong>{" "}
+          👤{" "}
           {event.createdBy.name}
         </p>
       )}
+
+      {user &&
+        event.createdBy &&
+        user._id ===
+          event.createdBy._id && (
+          <button
+            className="delete-btn"
+            onClick={
+              handleDelete
+            }
+          >
+            🗑️ Delete Event
+          </button>
+        )}
     </div>
   );
 }

@@ -33,8 +33,52 @@ const getInternships = async (req, res) => {
     });
   }
 };
+const deleteInternship =
+  async (req, res) => {
+    try {
+      const internship =
+        await Internship.findById(
+          req.params.id
+        );
 
+      if (!internship) {
+        return res
+          .status(404)
+          .json({
+            message:
+              "Internship not found",
+          });
+      }
+
+      if (
+        internship.postedBy.toString() !==
+        req.user.toString()
+      ) {
+        return res
+          .status(401)
+          .json({
+            message:
+              "Not authorized to delete this internship",
+          });
+      }
+
+      await Internship.findByIdAndDelete(
+        req.params.id
+      );
+
+      res.status(200).json({
+        message:
+          "Internship deleted successfully",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message:
+          error.message,
+      });
+    }
+  };
 module.exports = {
   createInternship,
   getInternships,
+  deleteInternship,
 };

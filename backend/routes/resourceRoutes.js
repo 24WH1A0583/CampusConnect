@@ -5,11 +5,30 @@ const router = express.Router();
 const {
   createResource,
   getResources,
-} = require("../controllers/resourceController");
+  deleteResource,
+} = require(
+  "../controllers/resourceController"
+);
 
-const protect = require("../middleware/authMiddleware");
+const protect = require(
+  "../middleware/authMiddleware"
+);
 
-router.post("/", protect, createResource);
-router.get("/", getResources);
+router.post(
+  "/",
+  protect,
+  createResource
+);
+
+router.get(
+  "/",
+  getResources
+);
+
+router.delete(
+  "/:id",
+  protect,
+  deleteResource
+);
 
 module.exports = router;

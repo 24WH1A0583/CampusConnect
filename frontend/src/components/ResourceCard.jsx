@@ -1,17 +1,46 @@
+import api from "../services/api";
+import "../css/Cards.css";
+
 function ResourceCard({
   resource,
+  fetchResources,
 }) {
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  async function handleDelete() {
+    try {
+      const token =
+        localStorage.getItem(
+          "token"
+        );
+
+      await api.delete(
+        `/resources/${resource._id}`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+      fetchResources();
+    } catch (error) {
+      console.log(error);
+      alert(
+        error.response?.data
+          ?.message ||
+          "Could not delete resource."
+      );
+    }
+  }
+
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        padding: "15px",
-        margin: "15px 0",
-        borderRadius: "10px",
-      }}
-    >
+    <div className="card">
       <h2>
-        {resource.title}
+        📚 {resource.title}
       </h2>
 
       <p>
@@ -21,22 +50,24 @@ function ResourceCard({
         {resource.subject}
       </p>
 
-      <a
-        href={resource.link}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Open Resource
-      </a>
-
-      <br />
-      <br />
+      <p>
+        <a
+          href={
+            resource.link
+          }
+          target="_blank"
+          rel="noreferrer"
+        >
+          🔗 Open Resource
+        </a>
+      </p>
 
       {resource.uploadedBy && (
         <p>
           <strong>
             Uploaded By:
           </strong>{" "}
+          👤{" "}
           {
             resource
               .uploadedBy
@@ -44,6 +75,22 @@ function ResourceCard({
           }
         </p>
       )}
+
+      {user &&
+        resource.uploadedBy &&
+        user._id ===
+          resource
+            .uploadedBy
+            ._id && (
+          <button
+            className="delete-btn"
+            onClick={
+              handleDelete
+            }
+          >
+            🗑️ Delete Resource
+          </button>
+        )}
     </div>
   );
 }

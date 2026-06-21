@@ -1,50 +1,84 @@
+import api from "../services/api";
+import "../css/Cards.css";
+
 function InternshipCard({
   internship,
+  fetchInternships,
 }) {
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  async function handleDelete() {
+    try {
+      const token =
+        localStorage.getItem(
+          "token"
+        );
+
+      await api.delete(
+        `/internships/${internship._id}`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`,
+          },
+        }
+      );
+
+      fetchInternships();
+    } catch (error) {
+      console.log(error);
+      alert(
+        error.response?.data
+          ?.message ||
+          "Could not delete internship."
+      );
+    }
+  }
+
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        padding: "15px",
-        margin: "15px 0",
-        borderRadius: "10px",
-      }}
-    >
+    <div className="card">
       <h2>
+        💼{" "}
         {internship.company}
       </h2>
 
-      <h3>
+      <p>
+        <strong>
+          Role:
+        </strong>{" "}
         {internship.role}
-      </h3>
+      </p>
 
       <p>
         <strong>
           Deadline:
         </strong>{" "}
+        📆{" "}
         {new Date(
           internship.deadline
         ).toLocaleDateString()}
       </p>
 
-      <a
-        href={
-          internship.link
-        }
-        target="_blank"
-        rel="noreferrer"
-      >
-        Apply Here
-      </a>
-
-      <br />
-      <br />
+      <p>
+        <a
+          href={
+            internship.link
+          }
+          target="_blank"
+          rel="noreferrer"
+        >
+          🔗 Apply Here
+        </a>
+      </p>
 
       {internship.postedBy && (
         <p>
           <strong>
             Posted By:
           </strong>{" "}
+          👤{" "}
           {
             internship
               .postedBy
@@ -52,6 +86,21 @@ function InternshipCard({
           }
         </p>
       )}
+
+      {user &&
+        internship.postedBy &&
+        user._id ===
+          internship.postedBy
+            ._id && (
+          <button
+            className="delete-btn"
+            onClick={
+              handleDelete
+            }
+          >
+            🗑️ Delete Internship
+          </button>
+        )}
     </div>
   );
 }

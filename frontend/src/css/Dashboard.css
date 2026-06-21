@@ -1,0 +1,125 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 30px;
+}
+
+.welcome-card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  margin-bottom: 40px;
+}
+
+.welcome-card h1 {
+  color: #2d3748;
+  margin-bottom: 20px;
+}
+
+.welcome-card h3 {
+  color: #4a5568;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.interests {
+  margin-top: 20px;
+}
+
+.interests-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.interest-chip {
+  background: #eef2ff;
+  color: #5c6ac4;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 15px;
+}
+.welcome-card {
+  text-align: center;
+}
+.welcome-card h3 {
+  text-align: center;
+}
+
+.dashboard > h2 {
+  color: white;
+  font-size: 42px;
+  margin-bottom: 30px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  );
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.dashboard-box {
+  background: white;
+  padding: 35px 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-box h2 {
+  color: #2d3748;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dashboard-grid a {
+  text-decoration: none;
+}
+
+.recommendations {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.recommendations h2 {
+  color: #2d3748;
+  text-align: center;
+}
+
+.recommendations ul {
+  margin-left: 20px;
+  color: #4a5568;
+}
+
+.recommendations li {
+  margin-bottom: 12px;
+}
+
+.recommendations p {
+  color: #718096;
+}
+.interests ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+.interests li {
+  text-align: center;
+}

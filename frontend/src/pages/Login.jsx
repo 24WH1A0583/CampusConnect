@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
+import "../css/Login.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,7 +14,8 @@ function Login() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
   };
 
@@ -21,10 +23,11 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await api.post(
-        "/auth/login",
-        formData
-      );
+      const res =
+        await api.post(
+          "/auth/login",
+          formData
+        );
 
       localStorage.setItem(
         "token",
@@ -33,51 +36,80 @@ function Login() {
 
       localStorage.setItem(
         "user",
-        JSON.stringify(res.data.user)
+        JSON.stringify(
+          res.data.user
+        )
       );
 
-      navigate("/dashboard");
+      navigate(
+        "/dashboard"
+      );
     } catch (error) {
       alert(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           "Login failed"
       );
     }
   };
 
   return (
-    <div>
-      <h1>CampusConnect Login</h1>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>
+          CampusConnect
+        </h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
+        <p className="auth-subtitle">
+          Sign in to continue
+        </p>
 
-        <br /><br />
+        <form
+          onSubmit={
+            handleSubmit
+          }
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={
+              formData.email
+            }
+            onChange={
+              handleChange
+            }
+            required
+          />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={
+              formData.password
+            }
+            onChange={
+              handleChange
+            }
+            required
+          />
 
-        <br /><br />
+          <button
+            type="submit"
+          >
+            Login
+          </button>
+        </form>
 
-        <button type="submit">
-          Login
-        </button>
-      </form>
-
-      <br />
-
-      <Link to="/register">
-        Create an account
-      </Link>
+        <p className="auth-link">
+          Don't have an
+          account?{" "}
+          <Link to="/register">
+            Register
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

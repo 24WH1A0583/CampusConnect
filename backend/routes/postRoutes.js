@@ -5,11 +5,30 @@ const router = express.Router();
 const {
   createPost,
   getPosts,
-} = require("../controllers/postController");
+  deletePost,
+} = require(
+  "../controllers/postController"
+);
 
-const protect = require("../middleware/authMiddleware");
+const protect = require(
+  "../middleware/authMiddleware"
+);
 
-router.post("/", protect, createPost);
-router.get("/", getPosts);
+router.post(
+  "/",
+  protect,
+  createPost
+);
+
+router.get(
+  "/",
+  getPosts
+);
+
+router.delete(
+  "/:id",
+  protect,
+  deletePost
+);
 
 module.exports = router;
