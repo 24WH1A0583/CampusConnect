@@ -11,6 +11,17 @@ const authRoutes = require("./routes/authRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
+const internshipRoutes = require(
+  "./routes/internshipRoutes"
+);
+app.use(
+  "/api/internships",
+  internshipRoutes
+);
+const resourceRoutes = require("./routes/resourceRoutes");
+app.use("/api/resources", resourceRoutes);
+const postRoutes = require("./routes/postRoutes");
+app.use("/api/posts", postRoutes);
 
 
 app.get("/", (req, res) => {

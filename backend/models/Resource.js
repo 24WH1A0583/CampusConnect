@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
-const internshipSchema = new mongoose.Schema(
+const resourceSchema = new mongoose.Schema(
   {
-    company: {
+    title: {
       type: String,
       required: true,
     },
-    role: {
+    subject: {
       type: String,
       required: true,
     },
@@ -14,11 +14,7 @@ const internshipSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    deadline: {
-      type: Date,
-      required: true,
-    },
-    postedBy: {
+    uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
@@ -29,6 +25,6 @@ const internshipSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model(
-  "Internship",
-  internshipSchema
+  "Resource",
+  resourceSchema
 );
